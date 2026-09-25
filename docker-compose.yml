@@ -1,0 +1,10 @@
+services:
+  api:
+    build: .
+    ports:
+      - "${PORT:-8000}:8000"
+    # 启动时安装依赖后再拉起服务，保证依赖始终与 requirements.txt 一致
+    command: >
+      sh -c "pip install --no-cache-dir -r requirements.txt
+             && uvicorn app.main:app --host 0.0.0.0 --port 8000"
+    restart: unless-stopped
